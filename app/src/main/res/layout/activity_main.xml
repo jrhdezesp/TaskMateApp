@@ -18,18 +18,19 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lavender_light"
-            app:titleTextColor="@color/lavender_black"
+            android:background="#4E84A6"
+            app:titleTextColor="#224459"
             app:title="@string/name">
 
             <ImageButton
-            android:id="@+id/menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home"
-            android:contentDescription="@string/searchbar_scrolling_view_behavior"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_gravity="start"/>
+                android:id="@+id/menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/searchbar_scrolling_view_behavior"
+                android:src="@drawable/home"
+                tools:ignore="TouchTargetSizeCheck" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -50,9 +51,9 @@
         android:layout_gravity="start"
         app:menu="@menu/menu"
         app:headerLayout="@layout/nav_header"
-        android:background="@color/lavender_light"
+        android:background="#F2F2F0"
         app:itemIconPadding="30dp"
-        app:itemTextColor="@color/lavender_black"
-        app:itemIconTint="@color/lavender_black"/>
+        app:itemTextColor="#224459"
+        app:itemIconTint="#224459"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
