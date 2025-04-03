@@ -29,9 +29,8 @@
                 android:layout_gravity="start"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/searchbar_scrolling_view_behavior"
-                android:src="@drawable/home"
+                android:src="@drawable/menu_selector"
                 tools:ignore="TouchTargetSizeCheck" />
-
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
@@ -54,22 +53,50 @@
                     android:text="TaskMate - TO-DO APP"
                     android:textColor="#224459"
                     android:textSize="30sp"
-                    android:layout_marginBottom="8dp" /> <!-- Margen inferior para separación -->
+                    android:layout_marginBottom="8dp"
+                    android:padding="20dp"/>
 
                 <TextView
                     android:id="@+id/descripcion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="   TaskMate es una aplicacion de desarrollo sobre     tareas y el uso de un calendario"
+                    android:gravity="center"
+                    android:text="TaskMate es una aplicacion de desarrollo sobre tareas y el uso de un calendario"
                     android:textColor="#7297A6"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:id="@+id/descripcion2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="La aplicacion fue hecha por parte de estudiantes de la Universidad Catolica de Honduras, para la asignatura de Programacion Movil 1"
+                    android:textColor="#7297A6"
+                    android:textSize="18sp"
+                    android:padding="20dp"/>
+
+                <Button
+                    android:id="@+id/btnCerrarSesion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#4E84A6"
+                    android:text="Cerrar Sesion"
+                    android:textColorLink="#4E84A6"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.764"/>
 
             </LinearLayout>
 
         </FrameLayout>
 
     </LinearLayout>
-    
+
+    <!-- Margen inferior para separación-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
