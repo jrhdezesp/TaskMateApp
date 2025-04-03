@@ -7,4 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".TareasDiarias">
 
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4E84A6"
+        app:titleTextColor="#224459"
+        app:title="@string/name"
+        tools:ignore="MissingConstraints">
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="283dp"
+        android:layout_height="59dp"
+        android:text="Tareas Diarias"
+        android:textAlignment="center"
+        android:textColor="#224459"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.141" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

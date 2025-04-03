@@ -1,5 +1,6 @@
 package com.example.taskmateprueba;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -42,5 +43,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void Login(View view){
+        Intent login = new Intent(this,Login.class);
+        startActivity(login);
     }
 }
