@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/Home"
+            android:icon="@drawable/home"
+            android:title="@string/title_home"
+            android:checked="true"/>
+
+        <item
+            android:id="@+id/Diario"
+            android:icon="@drawable/book"
+            android:title="@string/title_book"/>
+
+        <item
+            android:id="@+id/Calendario"
+            android:icon="@drawable/calendar"
+            android:title="@string/title_calendar"/>
+
+        <item
+            android:id="@+id/TareasDiarias"
+            android:icon="@drawable/checklist"
+            android:title="@string/title_checklist"/>
+
+        <item
+            android:id="@+id/Leves"
+            android:icon="@drawable/checkcircle"
+            android:title="@string/title_checkcircle"/>
+
+        <item
+            android:id="@+id/Moderadas"
+            android:icon="@drawable/verified"
+            android:title="@string/title_verified"/>
+
+        <item
+            android:id="@+id/Urgentes"
+            android:icon="@drawable/warning"
+            android:title="@string/title_warning"/>
+    </group>
+</menu>

@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">TaskMatePrueba</string>
+    <string name="app_name">TaskMate</string>
+
+    <string name="title_menu">TaskMate</string>
+    <string name="title_book">Journal</string>
+    <string name="title_calendar">Calendario</string>
+    <string name="title_checkcircle">Leves</string>
+    <string name="title_checklist">Tareas Diarias</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_verified">Moderadas</string>
+    <string name="title_warning">Urgentes</string>
+
+    <string name="Opem">Open</string>
+    <string name="Close">Close</string>
+    <string name="name">TaskMate App</string>
+    <string name="descripcion">Programación Movil 1</string>
+
 </resources>

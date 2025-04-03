@@ -3,7 +3,10 @@
     <style name="Base.Theme.TaskMatePrueba" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/lavender_light</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
+
 
     <style name="Theme.TaskMatePrueba" parent="Base.Theme.TaskMatePrueba" />
 </resources>
