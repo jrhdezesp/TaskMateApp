@@ -29,8 +29,9 @@
                 android:layout_gravity="start"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/searchbar_scrolling_view_behavior"
-                android:src="@drawable/menu_selector"
                 android:padding="6dp"
+                android:src="@drawable/menu_selector"
+                android:visibility="gone"
                 tools:ignore="TouchTargetSizeCheck" />
         </androidx.appcompat.widget.Toolbar>
 

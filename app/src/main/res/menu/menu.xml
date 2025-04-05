@@ -8,8 +8,7 @@
         <item
             android:id="@+id/Home"
             android:icon="@drawable/home"
-            android:title="@string/title_home"
-            android:checked="true"/>
+            android:title="@string/title_home"/>
 
         <item
             android:id="@+id/Diario"

@@ -16,7 +16,27 @@
       app:titleTextColor="#224459"
       app:title="@string/name"
       tools:ignore="MissingConstraints">
+
+    <ImageButton
+        android:id="@+id/menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/searchbar_scrolling_view_behavior"
+        android:padding="6dp"
+        android:src="@drawable/menu_selector"
+        android:visibility="gone"
+        tools:ignore="TouchTargetSizeCheck" />
   </androidx.appcompat.widget.Toolbar>
+
+  <FrameLayout
+      android:id="@+id/frame_layout"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      tools:ignore="MissingConstraints">
+  </FrameLayout>
 
 
   <TextView
@@ -34,4 +54,21 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_bias="0.141" />
 
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/btnAgregar"
+      android:contentDescription="Agregar Tarea"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="16dp"
+      android:backgroundTint="@color/color3"
+      android:layout_alignParentEnd="true"
+      android:src="@drawable/add"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.954"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.976"
+      app:tint="@color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
