@@ -81,7 +81,7 @@ public class Calendario extends AppCompatActivity {
                 }
         );
 
-        // Escuchar selección de fecha en el CalendarView
+
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             java.util.Calendar selectedDate = java.util.Calendar.getInstance();
             selectedDate.set(year, month, dayOfMonth);
