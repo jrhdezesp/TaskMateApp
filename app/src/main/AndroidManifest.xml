@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TaskMatePrueba"
         tools:targetApi="31">
         <activity
+            android:name=".ActualizarTask"
+            android:exported="false" />
+        <activity
             android:name=".ActualizarNota"
             android:exported="false" />
         <activity

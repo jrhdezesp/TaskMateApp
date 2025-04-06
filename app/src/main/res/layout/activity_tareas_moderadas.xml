@@ -43,11 +43,11 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="25dp"
-            android:layout_above="@id/btnAgregar" />
+            android:layout_above="@id/btnAgregarTask" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAgregar"
-            android:contentDescription="Agregar Tarea"
+            android:id="@+id/btnAgregarTask"
+            android:contentDescription="Agregar Task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
