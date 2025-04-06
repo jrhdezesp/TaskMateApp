@@ -24,7 +24,7 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         //Tabla diarias
         db.execSQL("CREATE TABLE diarias(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT)");
         //Tabla Tareas
-        db.execSQL("CREATE TABLE tareas(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT)");
+        db.execSQL("CREATE TABLE tareas(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT, tipo TEXT)");
     }
 
     @Override
@@ -91,27 +91,28 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
 
     //Tasks
 
-    public void insertarTask(String titulo, String descripcion) {
+    public void insertarTask(String titulo, String descripcion, String tipo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("titulo", titulo);
         values.put("descripcion", descripcion);
+        values.put("tipo",tipo);
         db.insert("tareas", null, values);
     }
 
     public Cursor cargarLeve() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM tareas", null);
+        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ?", new String[]{"Leve"});
     }
 
     public Cursor cargarModerada() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM tareas", null);
+        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ?", new String[]{"Moderada"});
     }
 
     public Cursor cargarUrgente() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM tareas", null);
+        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ?", new String[]{"Urgente"});
     }
 
     public void eliminarTask(String id) {
@@ -119,11 +120,12 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         db.delete("tareas", "id=?", new String[]{id});
     }
 
-    public void actualizarTask(String titulo, String descripcion, String id) {
+    public void actualizarTask(String titulo, String descripcion, String tipo, String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("titulo", titulo);
         values.put("descripcion", descripcion);
+        values.put("tipo", tipo);
         db.update("tareas", values, "id=?", new String[]{id});
     }
 

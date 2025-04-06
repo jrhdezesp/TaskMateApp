@@ -40,6 +40,7 @@ public class AgregarTarea extends AppCompatActivity {
                     startActivity(new Intent(AgregarTarea.this,TareasDiarias.class));
                     txtTitulo.setText("");
                     txtDescripcion.setText("");
+                    finish();
                 }else{
                     Toast.makeText(AgregarTarea.this,"Llene todos los campos", Toast.LENGTH_SHORT).show();
                 }

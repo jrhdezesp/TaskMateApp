@@ -71,7 +71,7 @@ public class TareasModeradas extends AppCompatActivity implements NavigationView
 
     private void cargarTareas() {
         arrayList.clear();
-        Cursor cursor = admin.cargarLeve(); //
+        Cursor cursor = admin.cargarModerada(); //
         while (cursor.moveToNext()) {
             arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
         }

@@ -40,6 +40,7 @@ public class AgregarNota extends AppCompatActivity {
                     startActivity(new Intent(AgregarNota.this,Diario.class));
                     txtTitulo.setText("");
                     txtDescripcion.setText("");
+                    finish();
                 }else{
                     Toast.makeText(AgregarNota.this,"Llene todos los campos", Toast.LENGTH_SHORT).show();
                 }
