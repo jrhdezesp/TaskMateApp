@@ -13,7 +13,6 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Habilitamos el soporte de claves foráneas
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);

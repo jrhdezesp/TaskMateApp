@@ -2,30 +2,29 @@ package com.example.taskmateprueba;
 
 public class TaskModel {
 
-    String title,description;
-
+    String titulo,descripcion;
     int id;
 
-    public TaskModel(String title, String description, int id) {
-        this.title = title;
-        this.description = description;
+    public TaskModel(String titulo, String descripcion, int id) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
         this.id = id;
     }
 
     public String getTitle() {
-        return title;
+        return titulo;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.titulo = title;
     }
 
     public String getDescription() {
-        return description;
+        return descripcion;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.descripcion = description;
     }
 
     public int getId() {

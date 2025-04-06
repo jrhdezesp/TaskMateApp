@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TaskMatePrueba"
         tools:targetApi="31">
         <activity
+            android:name=".ActualizarTarea"
+            android:exported="false" />
+        <activity
             android:name=".AgregarTarea"
             android:exported="false" />
         <activity

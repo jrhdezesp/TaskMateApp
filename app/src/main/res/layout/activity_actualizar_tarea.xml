@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".AgregarTarea">
+    tools:context=".ActualizarTarea">
 
     <TextView
         android:id="@+id/lblTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Agregar Tareas"
+        android:text="Actualizar Tareas"
         android:textSize="27sp"
         android:textColor="@color/color1"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
         android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"/>
 
     <ImageView
-        android:id="@+id/imgGuardar"
+        android:id="@+id/imgActualizar"
         android:contentDescription="Imagen Tarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/agregar_tarea"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/lblTitulo"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
         android:layout_marginEnd="8dp"
         />
 
     <EditText
-        android:id="@+id/txtTitulo"
+        android:id="@+id/txtTituloActualizar"
         android:foreground="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:textColor="@color/color1"
@@ -40,11 +44,13 @@
         android:layout_marginTop="100dp"
         android:hint="Ingrese el Titulo"
         android:background="@drawable/borde_azul"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
         android:textSize="20sp"
         android:maxLines="1"/>
 
     <EditText
-        android:id="@+id/txtDescripcion"
+        android:id="@+id/txtDescripcionActualizar"
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:foreground="?attr/selectableItemBackground"
@@ -54,20 +60,25 @@
         android:textSize="18sp"
         android:textColor="@color/color1"
         android:textColorHint="@color/color2"
-        android:layout_below="@id/txtTitulo"
+        android:layout_below="@id/txtTituloActualizar"
         android:background="@drawable/borde_azul"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="10dp"/>
 
     <Button
-        android:id="@+id/btnAgregarTarea"
+        android:id="@+id/btnActualizarTarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="0dp"
-        android:layout_below="@id/txtDescripcion"
+        android:layout_below="@id/txtDescripcionActualizar"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
         android:backgroundTint="@color/color2"
-        android:text="Agregar"
+        android:text="Actualizar"
         android:textStyle="bold"/>
+
 
 
 </RelativeLayout>
