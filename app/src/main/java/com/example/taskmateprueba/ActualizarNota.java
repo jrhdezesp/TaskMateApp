@@ -10,20 +10,20 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ActualizarTarea extends AppCompatActivity {
+public class ActualizarNota extends AppCompatActivity {
 
     EditText actTitulo,actDescripcion;
-    Button btnActualizarTarea;
+    Button btnActualizarNota;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_actualizar_tarea);
+        setContentView(R.layout.activity_actualizar_nota);
 
 
-        btnActualizarTarea = findViewById(R.id.btnActualizarTarea);
+        btnActualizarNota = findViewById(R.id.btnActualizarNota);
         actTitulo = findViewById(R.id.txtTituloActualizar);
         actDescripcion = findViewById(R.id.txtDescripcionActualizar);
 
@@ -33,17 +33,16 @@ public class ActualizarTarea extends AppCompatActivity {
         actTitulo.setText(titulo);
         actDescripcion.setText(desc);
 
-
         String sId = String.valueOf(id);
 
-        btnActualizarTarea.setOnClickListener(new View.OnClickListener() {
+        btnActualizarNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AdminSQLiteOpen admin = new AdminSQLiteOpen(ActualizarTarea.this);
-                admin.actualizarDiaria(actTitulo.getText().toString(),actDescripcion.getText().toString(),sId);
-                Toast.makeText(ActualizarTarea.this,"Los datos han sido actualizados.",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ActualizarTarea.this,TareasDiarias.class));
+                AdminSQLiteOpen admin = new AdminSQLiteOpen(ActualizarNota.this);
+                admin.actualizarNota(actTitulo.getText().toString(),actDescripcion.getText().toString(),sId);
+                Toast.makeText(ActualizarNota.this,"Los datos han sido actualizados.",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ActualizarNota.this,Diario.class));
             }
         });
 

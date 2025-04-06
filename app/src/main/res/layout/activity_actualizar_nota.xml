@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ActualizarNota">
+
+    <TextView
+        android:id="@+id/lblTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Actualizar Notas"
+        android:textSize="27sp"
+        android:textColor="@color/color1"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"/>
+
+    <ImageView
+        android:id="@+id/imgActualizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/lblTitulo"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginRight="14dp"
+        android:contentDescription="Imagen Tarea"
+        android:src="@drawable/agregar_tarea" />
+
+    <EditText
+        android:id="@+id/txtTituloActualizar"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:textColor="@color/color1"
+        android:textColorHint="@color/color2"
+        android:layout_height="60dp"
+        android:padding="20dp"
+        android:layout_marginTop="100dp"
+        android:hint="Ingrese el Titulo"
+        android:background="@drawable/borde_azul"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:textSize="20sp"
+        android:maxLines="1"/>
+
+    <EditText
+        android:id="@+id/txtDescripcionActualizar"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:hint="Ingrese la Descripcion"
+        android:gravity="top"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:textColor="@color/color1"
+        android:textColorHint="@color/color2"
+        android:layout_below="@id/txtTituloActualizar"
+        android:background="@drawable/borde_azul"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnActualizarNota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:layout_below="@id/txtDescripcionActualizar"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:backgroundTint="@color/color2"
+        android:text="Actualizar"
+        android:textStyle="bold"/>
+
+
+
+</RelativeLayout>

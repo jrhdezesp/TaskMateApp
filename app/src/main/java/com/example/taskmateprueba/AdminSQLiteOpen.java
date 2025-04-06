@@ -1,108 +1,87 @@
 package com.example.taskmateprueba;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 public class AdminSQLiteOpen extends SQLiteOpenHelper {
 
+    private static final String DATABASE_NAME = "TaskMate.db";
+    private static final int VERSION = 2;
 
-    private static final String DATABASE_NAME = "BdAppToDo.db";
-    private static final int DATABASE_VERSION = 1;
-
-    public AdminSQLiteOpen(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    @Override
-    public void onConfigure(SQLiteDatabase db) {
-        super.onConfigure(db);
-        db.setForeignKeyConstraintsEnabled(true);
+    public AdminSQLiteOpen(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Crear tabla "usuarios"
-        db.execSQL(
-                "CREATE TABLE usuarios (" +
-                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "    nombre_usuario TEXT NOT NULL UNIQUE," +
-                        "    correo TEXT NOT NULL UNIQUE," +
-                        "    contrasena TEXT NOT NULL" +
-                        ");"
-        );
+        // Tabla Journal
+        db.execSQL("CREATE TABLE journal(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT)");
 
-        // Crear tabla "tareas"
-        db.execSQL(
-                "CREATE TABLE tareas (" +
-                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "    id_usuario INTEGER," +
-                        "    titulo TEXT NOT NULL," +
-                        "    descripcion TEXT," +
-                        "    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                        "    fecha_programada DATE," +
-                        "    completada INTEGER DEFAULT 0," +
-                        "    prioridad INTEGER CHECK(prioridad IN (1, 2, 3))," +
-                        "    FOREIGN KEY(id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE" +
-                        ");"
-        );
-
-        // Crear tabla "tareas_diarias"
-        db.execSQL(
-                "CREATE TABLE tareas_diarias (" +
-                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "    id_tarea INTEGER," +
-                        "    fecha DATE NOT NULL," +
-                        "    completada INTEGER DEFAULT 0," +
-                        "    FOREIGN KEY(id_tarea) REFERENCES tareas(id) ON DELETE CASCADE" +
-                        ");"
-        );
-
-        // Crear tabla "tareas_recurrentes"
-        db.execSQL(
-                "CREATE TABLE tareas_recurrentes (" +
-                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "    id_usuario INTEGER," +
-                        "    titulo TEXT NOT NULL," +
-                        "    descripcion TEXT," +
-                        "    prioridad INTEGER CHECK(prioridad IN (1, 2, 3))," +
-                        "    hora TEXT, " +  // SQLite no tiene un tipo TIME nativo; se usa TEXT o NUMERIC según convenga
-                        "    FOREIGN KEY(id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE" +
-                        ");"
-        );
-
-        // Crear tabla "calendario"
-        db.execSQL(
-                "CREATE TABLE calendario (" +
-                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "    id_tarea INTEGER," +
-                        "    fecha DATE NOT NULL," +
-                        "    FOREIGN KEY(id_tarea) REFERENCES tareas(id) ON DELETE CASCADE" +
-                        ");"
-        );
-
-        // Crear tabla "diario"
-        db.execSQL(
-                "CREATE TABLE diario (" +
-                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "    id_usuario INTEGER," +
-                        "    fecha DATE NOT NULL," +
-                        "    contenido TEXT," +
-                        "    estado_animo TEXT," +
-                        "    FOREIGN KEY(id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE" +
-                        ");"
-        );
+        // Tabla My_Table
+        db.execSQL("CREATE TABLE my_table(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT)");
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        db.execSQL("DROP TABLE IF EXISTS diario");
-        db.execSQL("DROP TABLE IF EXISTS calendario");
-        db.execSQL("DROP TABLE IF EXISTS tareas_recurrentes");
-        db.execSQL("DROP TABLE IF EXISTS tareas_diarias");
-        db.execSQL("DROP TABLE IF EXISTS tareas");
-        db.execSQL("DROP TABLE IF EXISTS usuarios");
+        // Puedes mejorar esto para hacer migraciones más controladas
+        db.execSQL("DROP TABLE IF EXISTS journal");
+        db.execSQL("DROP TABLE IF EXISTS my_table");
         onCreate(db);
+    }
+
+    // Métodos para journal
+    public void insertarNota(String titulo, String descripcion) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("titulo", titulo);
+        values.put("descripcion", descripcion);
+        db.insert("journal", null, values);
+    }
+
+    public Cursor cargarNotas() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM journal", null);
+    }
+
+    public void eliminarNota(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete("journal", "id=?", new String[]{id});
+    }
+
+    public void actualizarNota(String titulo, String descripcion, String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("titulo", titulo);
+        values.put("descripcion", descripcion);
+        db.update("journal", values, "id=?", new String[]{id});
+    }
+
+    // Métodos para my_table
+    public void insertarDiaria(String titulo, String descripcion) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("titulo", titulo);
+        values.put("descripcion", descripcion);
+        db.insert("my_table", null, values);
+    }
+
+    public Cursor cargarDiarias() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM my_table", null);
+    }
+
+    public void eliminarDiaria(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete("my_table", "id=?", new String[]{id});
+    }
+
+    public void actualizarDiaria(String titulo, String descripcion, String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("titulo", titulo);
+        values.put("descripcion", descripcion);
+        db.update("my_table", values, "id=?", new String[]{id});
     }
 }

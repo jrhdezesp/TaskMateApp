@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AgregarNota">
+
+    <TextView
+        android:id="@+id/lblTituloNota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Nota"
+        android:textSize="27sp"
+        android:textColor="@color/color1"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"/>
+
+    <ImageView
+        android:id="@+id/imgGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/lblTituloNota"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="34dp"
+        android:contentDescription="Imagen Nota"
+        android:src="@drawable/agregar_tarea" />
+
+    <EditText
+        android:id="@+id/txtTituloNota"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:textColor="@color/color1"
+        android:textColorHint="@color/color2"
+        android:layout_height="60dp"
+        android:padding="20dp"
+        android:layout_marginTop="100dp"
+        android:hint="Ingrese el Titulo"
+        android:background="@drawable/borde_azul"
+        android:textSize="20sp"
+        android:maxLines="1"/>
+
+    <EditText
+        android:id="@+id/txtDescripcionNota"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:hint="Ingrese la Descripcion"
+        android:gravity="top"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:textColor="@color/color1"
+        android:textColorHint="@color/color2"
+        android:layout_below="@id/txtTituloNota"
+        android:background="@drawable/borde_azul"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnAgregarNota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:layout_below="@id/txtDescripcionNota"
+        android:backgroundTint="@color/color2"
+        android:text="Agregar"
+        android:textStyle="bold"/>
+
+
+</RelativeLayout>

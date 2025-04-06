@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-
     private Toolbar toolbar;
 
 
@@ -74,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.Home) {
-            Intent inicio = new Intent(this, MainActivity.class);
-            startActivity(inicio);
+
         }else if (menuItem.getItemId() == R.id.Diario) {
             Intent diario = new Intent(this, Diario.class);
             startActivity(diario);

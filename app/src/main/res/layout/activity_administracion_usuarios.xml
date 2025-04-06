@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/lblLogin2"
+        android:id="@+id/lblNewUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.141" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/txtAgregarClave"
         android:layout_width="224dp"
         android:layout_height="69dp"
         android:backgroundTint="#224459"
@@ -44,7 +44,7 @@
         app:layout_constraintVertical_bias="0.418" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/txtAgregarUsuario"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:backgroundTint="#224459"
@@ -59,8 +59,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.274" />
 
+    <EditText
+        android:id="@+id/txtAgregarCorreo"
+        android:layout_width="225dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#224459"
+        android:ems="10"
+        android:hint="Correo"
+        android:inputType="text"
+        android:textColor="#7297A6"
+        android:textColorHint="#4E84A6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.569" />
+
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnRegresar"
+        android:layout_width="130dp"
+        android:layout_height="58dp"
+        android:backgroundTint="#7297A6"
+        android:onClick="Login"
+        android:text="Regresar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.875" />
+
+    <Button
+        android:id="@+id/btnCrearUsuario"
         android:layout_width="152dp"
         android:layout_height="65dp"
         android:backgroundTint="#7297A6"
@@ -70,21 +100,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.633" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="130dp"
-        android:layout_height="58dp"
-        android:backgroundTint="#7297A6"
-        android:text="Regresar"
-        android:onClick="Login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.83" />
+        app:layout_constraintVertical_bias="0.749" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

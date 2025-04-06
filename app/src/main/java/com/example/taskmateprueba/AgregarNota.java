@@ -11,7 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class AgregarTarea extends AppCompatActivity {
+public class AgregarNota extends AppCompatActivity {
 
     EditText txtTitulo,txtDescripcion;
     Button btnAgregar;
@@ -22,12 +22,12 @@ public class AgregarTarea extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_agregar_tarea);
+        setContentView(R.layout.activity_agregar_nota);
 
-        txtTitulo = findViewById(R.id.txtTitulo);
-        txtDescripcion = findViewById(R.id.txtDescripcion);
-        btnAgregar = findViewById(R.id.btnAgregarTarea);
-        admin = new AdminSQLiteOpen(AgregarTarea.this);
+        txtTitulo = findViewById(R.id.txtTituloNota);
+        txtDescripcion = findViewById(R.id.txtDescripcionNota);
+        btnAgregar = findViewById(R.id.btnAgregarNota);
+        admin = new AdminSQLiteOpen(AgregarNota.this);
 
 
         btnAgregar.setOnClickListener(new View.OnClickListener(){
@@ -35,13 +35,13 @@ public class AgregarTarea extends AppCompatActivity {
             public void onClick(View view){
 
                 if(txtTitulo.length()>0 && txtDescripcion.length()>0){
-                    admin.insertarDiaria(txtTitulo.getText().toString(),txtDescripcion.getText().toString());
-                    Toast.makeText(AgregarTarea.this,"Los datos se agregaron correctamente", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AgregarTarea.this,TareasDiarias.class));
+                    admin.insertarNota(txtTitulo.getText().toString(),txtDescripcion.getText().toString());
+                    Toast.makeText(AgregarNota.this,"Los datos se agregaron correctamente", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AgregarNota.this,Diario.class));
                     txtTitulo.setText("");
                     txtDescripcion.setText("");
                 }else{
-                    Toast.makeText(AgregarTarea.this,"Llene todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AgregarNota.this,"Llene todos los campos", Toast.LENGTH_SHORT).show();
                 }
             }
         });

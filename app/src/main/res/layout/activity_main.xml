@@ -99,10 +99,9 @@
 
     </LinearLayout>
 
-    <!-- Margen inferior para separación-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/menu"
