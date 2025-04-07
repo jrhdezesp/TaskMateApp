@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/txtevtitulo"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:hint="Título del evento" />
+
+    <EditText
+        android:id="@+id/txtevdesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:gravity="top|start" />
+
+    <Button
+        android:id="@+id/btnhora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar hora de inicio" />
+
+    <Button
+        android:id="@+id/btnhorafin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar hora de fin" />
+</LinearLayout>
