@@ -21,6 +21,7 @@
             app:title="@string/name"
             tools:ignore="MissingConstraints" />
 
+
         <TextView
             android:id="@+id/lblTituloDiarias"
             android:layout_width="wrap_content"

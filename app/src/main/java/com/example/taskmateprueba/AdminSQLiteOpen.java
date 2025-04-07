@@ -35,6 +35,16 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Metodos para Usuarios
+    public void insertarUsuario(String usuario,String clave, String correo){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("usuario", usuario);
+        values.put("clave", clave);
+        values.put("correo", correo);
+        db.insert("usuario",null,values);
+    }
+
     // Métodos para journal
     public void insertarNota(String titulo, String descripcion) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -98,6 +108,11 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         values.put("descripcion", descripcion);
         values.put("tipo",tipo);
         db.insert("tareas", null, values);
+    }
+
+    public Cursor cargarTodas(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("Select * from tareas",null);
     }
 
     public Cursor cargarLeve() {
