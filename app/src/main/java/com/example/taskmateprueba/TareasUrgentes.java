@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.activity.EdgeToEdge;
@@ -29,7 +30,7 @@ public class TareasUrgentes extends AppCompatActivity implements NavigationView.
     RecyclerView recyclerView;
     ArrayList<ModeloTareas> arrayList = new ArrayList<>();
     AdminSQLiteOpen admin;
-    SesionManager sesionManager;
+    SesionManager sesionManager;  // Definimos la variable SesionManager
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -38,6 +39,9 @@ public class TareasUrgentes extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tareas_urgentes);
+
+        // Inicializar SesionManager
+        sesionManager = new SesionManager(this);  // Inicializar la sesión aquí
 
         // Inicializar el DrawerLayout y NavigationView
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -72,19 +76,22 @@ public class TareasUrgentes extends AppCompatActivity implements NavigationView.
 
     private void cargarTareas() {
         arrayList.clear();
-        int usuarioId = sesionManager.obtenerUsuarioId();
 
-        Cursor cursor = admin.cargarUrgente(usuarioId);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
-            } while (cursor.moveToNext());
+        // Verifica que el SesionManager no sea null
+        if (sesionManager != null) {
+            int usuarioId = sesionManager.obtenerUsuarioId();  // Obtiene el ID del usuario desde la sesión
+            Cursor cursor = admin.cargarUrgente(usuarioId);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
+                } while (cursor.moveToNext());
+            }
+            recyclerView.getAdapter().notifyDataSetChanged();
+        } else {
+            // Si sesionManager es null, muestra un mensaje de error
+            Toast.makeText(this, "Error al obtener sesión de usuario", Toast.LENGTH_SHORT).show();
         }
-
-        recyclerView.getAdapter().notifyDataSetChanged();
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -100,6 +107,12 @@ public class TareasUrgentes extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.Moderadas) {
             startActivity(new Intent(this, TareasModeradas.class));
         } else if (id == R.id.Urgentes) {
+            // Ya estamos en esta actividad
+        }else if (id == R.id.CerrarSesion) {
+            sesionManager.cerrarSesion();
+            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Login.class));
+            finish();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

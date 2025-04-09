@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.activity.EdgeToEdge;
@@ -107,6 +108,11 @@ public class Diario extends AppCompatActivity implements NavigationView.OnNaviga
             startActivity(new Intent(this, TareasModeradas.class));
         } else if (id == R.id.Urgentes) {
             startActivity(new Intent(this, TareasUrgentes.class));
+        }else if (id == R.id.CerrarSesion) {
+            sesionManager.cerrarSesion();
+            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Login.class));
+            finish();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

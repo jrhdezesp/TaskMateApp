@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.activity.EdgeToEdge;
@@ -40,6 +41,9 @@ public class TareasModeradas extends AppCompatActivity implements NavigationView
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tareas_moderadas);
 
+        // Inicializar SesionManager
+        sesionManager = new SesionManager(this);  // Inicializar la sesión
+
         // Inicializar el DrawerLayout y NavigationView
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -73,16 +77,22 @@ public class TareasModeradas extends AppCompatActivity implements NavigationView
 
     private void cargarTareas() {
         arrayList.clear();
-        int usuarioId = sesionManager.obtenerUsuarioId();
-        Cursor cursor = admin.cargarModerada(usuarioId);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
-            } while (cursor.moveToNext());
-        }
-        recyclerView.getAdapter().notifyDataSetChanged();
-    }
 
+        // Verifica que el SesionManager no sea null
+        if (sesionManager != null) {
+            int usuarioId = sesionManager.obtenerUsuarioId();  // Obtiene el ID del usuario desde la sesión
+            Cursor cursor = admin.cargarModerada(usuarioId);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
+                } while (cursor.moveToNext());
+            }
+            recyclerView.getAdapter().notifyDataSetChanged();
+        } else {
+            // Si sesionManager es null, muestra un mensaje de error
+            Toast.makeText(this, "Error al obtener sesión de usuario", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -96,8 +106,14 @@ public class TareasModeradas extends AppCompatActivity implements NavigationView
         } else if (id == R.id.Leves) {
             startActivity(new Intent(this, TareasLeves.class));
         } else if (id == R.id.Moderadas) {
+            // Ya estamos en esta actividad
         } else if (id == R.id.Urgentes) {
             startActivity(new Intent(this, TareasUrgentes.class));
+        }else if (id == R.id.CerrarSesion) {
+            sesionManager.cerrarSesion();
+            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Login.class));
+            finish();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

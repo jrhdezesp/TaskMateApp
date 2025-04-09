@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.activity.EdgeToEdge;
@@ -58,6 +59,10 @@ public class TareasDiarias extends AppCompatActivity implements NavigationView.O
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         TaskAdapter adapter = new TaskAdapter(this, arrayList);
         recyclerView.setAdapter(adapter);
+
+        // Inicializamos el SesionManager
+        sesionManager = new SesionManager(this);  // ← Asegúrate de inicializarlo correctamente
+
         cargarTareas();
 
         btnAgregar.setOnClickListener(view ->
@@ -73,16 +78,21 @@ public class TareasDiarias extends AppCompatActivity implements NavigationView.O
 
     private void cargarTareas() {
         arrayList.clear();
-        int usuarioId = sesionManager.obtenerUsuarioId();
-        Cursor cursor = admin.cargarDiarias(usuarioId);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                arrayList.add(new TaskModel(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
-            } while (cursor.moveToNext());
-        }
-        recyclerView.getAdapter().notifyDataSetChanged();
-    }
 
+        if (sesionManager != null) {
+            int usuarioId = sesionManager.obtenerUsuarioId();
+            Cursor cursor = admin.cargarDiarias(usuarioId);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    arrayList.add(new TaskModel(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
+                } while (cursor.moveToNext());
+            }
+            recyclerView.getAdapter().notifyDataSetChanged();
+        } else {
+            // Manejo del caso si sesionManager es null
+            // Puedes agregar un mensaje de error o redirigir al usuario a la pantalla de inicio de sesión si es necesario
+        }
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -99,6 +109,11 @@ public class TareasDiarias extends AppCompatActivity implements NavigationView.O
             startActivity(new Intent(this, TareasModeradas.class));
         } else if (id == R.id.Urgentes) {
             startActivity(new Intent(this, TareasUrgentes.class));
+        }else if (id == R.id.CerrarSesion) {
+            sesionManager.cerrarSesion();
+            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Login.class));
+            finish();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
