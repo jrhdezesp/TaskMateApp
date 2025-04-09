@@ -29,6 +29,8 @@ public class TareasModeradas extends AppCompatActivity implements NavigationView
     RecyclerView recyclerView;
     ArrayList<ModeloTareas> arrayList = new ArrayList<>();
     AdminSQLiteOpen admin;
+
+    SesionManager sesionManager;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -71,12 +73,16 @@ public class TareasModeradas extends AppCompatActivity implements NavigationView
 
     private void cargarTareas() {
         arrayList.clear();
-        Cursor cursor = admin.cargarModerada(); //
-        while (cursor.moveToNext()) {
-            arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
+        int usuarioId = sesionManager.obtenerUsuarioId();
+        Cursor cursor = admin.cargarModerada(usuarioId);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
+            } while (cursor.moveToNext());
         }
         recyclerView.getAdapter().notifyDataSetChanged();
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

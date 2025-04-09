@@ -32,6 +32,8 @@ public class TareasDiarias extends AppCompatActivity implements NavigationView.O
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
+    SesionManager sesionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,12 +73,16 @@ public class TareasDiarias extends AppCompatActivity implements NavigationView.O
 
     private void cargarTareas() {
         arrayList.clear();
-        Cursor cursor = admin.cargarDiarias(); // ← Cambiado aquí
-        while (cursor.moveToNext()) {
-            arrayList.add(new TaskModel(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
+        int usuarioId = sesionManager.obtenerUsuarioId();
+        Cursor cursor = admin.cargarDiarias(usuarioId);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                arrayList.add(new TaskModel(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
+            } while (cursor.moveToNext());
         }
         recyclerView.getAdapter().notifyDataSetChanged();
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

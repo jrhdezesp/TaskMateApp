@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -38,12 +39,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private Toolbar toolbar;
 
+    // 👤 Sesión
+    private SesionManager sesionManager;
+    private int usuarioId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        // Sesión
+        sesionManager = new SesionManager(this);
+        if (!sesionManager.haySesionActiva()) {
+            // Redirigir si no hay sesión
+            startActivity(new Intent(this, Login.class));
+            finish();
+            return;
+        }
+
+        usuarioId = sesionManager.obtenerUsuarioId();
+
+        // Toolbar + Drawer
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -66,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // Inicializar componentes de tareas
-        recyclerView = findViewById(R.id.recyclerview); // Asegúrate que el ID exista en activity_main.xml
+        recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         admin = new AdminSQLiteOpen(this);
         adapter = new AdaptadorTareas(this, arrayList);
         recyclerView.setAdapter(adapter);
 
-        btnAgregarTask = findViewById(R.id.btnAgregarTask); // Asegúrate que el botón esté en el XML
+        btnAgregarTask = findViewById(R.id.btnAgregarTask);
         btnAgregarTask.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, Tareas.class));
         });
@@ -86,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void cargarTareas() {
         arrayList.clear();
-        Cursor cursor = admin.cargarTodas(); // Puedes cambiar a cargarTodas() si deseas incluir todas
+        Cursor cursor = admin.cargarTodas(usuarioId);
         while (cursor.moveToNext()) {
             arrayList.add(new ModeloTareas(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
         }
@@ -102,30 +119,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
+        Intent intent = null;
+
         if (id == R.id.Home) {
             // Ya estás en MainActivity
         } else if (id == R.id.Diario) {
-            startActivity(new Intent(this, Diario.class));
+            intent = new Intent(this, Diario.class);
         } else if (id == R.id.TareasDiarias) {
-            startActivity(new Intent(this, TareasDiarias.class));
+            intent = new Intent(this, TareasDiarias.class);
         } else if (id == R.id.Calendario) {
-            startActivity(new Intent(this, Calendario.class));
+            intent = new Intent(this, Calendario.class);
         } else if (id == R.id.Leves) {
-            startActivity(new Intent(this, TareasLeves.class));
+            intent = new Intent(this, TareasLeves.class);
         } else if (id == R.id.Moderadas) {
-            startActivity(new Intent(this, TareasModeradas.class));
+            intent = new Intent(this, TareasModeradas.class);
         } else if (id == R.id.Urgentes) {
-            startActivity(new Intent(this, TareasUrgentes.class));
+            intent = new Intent(this, TareasUrgentes.class);
+        } else if (id == R.id.CerrarSesion) {
+            sesionManager.cerrarSesion();
+            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Login.class));
+            finish();
         }
+
+        if (intent != null) startActivity(intent);
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void Login(View view) {
-        Intent login = new Intent(this, Login.class);
-        startActivity(login);
-    }
 
     @Override
     public void onBackPressed() {
@@ -135,5 +157,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 }

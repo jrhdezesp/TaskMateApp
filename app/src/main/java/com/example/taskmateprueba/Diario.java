@@ -24,19 +24,32 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 public class Diario extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
     FloatingActionButton btnAgregarNota;
     RecyclerView recyclerView;
     ArrayList<NoteModel> arrayList = new ArrayList<>();
-    AdminSQLiteOpen admin; // ← Reemplazamos MantenimientoJournal por AdminSQLiteOpen
+    AdminSQLiteOpen admin;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+
+    // Sesión
+    private SesionManager sesionManager;
+    private int usuarioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_diario);
+
+        // Inicializar Sesión
+        sesionManager = new SesionManager(this);
+        if (!sesionManager.haySesionActiva()) {
+            // Redirigir si no hay sesión activa
+            startActivity(new Intent(this, Login.class));
+            finish();
+            return;
+        }
+        usuarioId = sesionManager.obtenerUsuarioId(); // Obtener el ID del usuario
 
         // Inicializar el DrawerLayout y NavigationView
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -52,11 +65,11 @@ public class Diario extends AppCompatActivity implements NavigationView.OnNaviga
 
         btnAgregarNota = findViewById(R.id.btnAgregarNota);
         recyclerView = findViewById(R.id.recyclerview);
-        admin = new AdminSQLiteOpen(this); // ← Usamos AdminSQLiteOpen
+        admin = new AdminSQLiteOpen(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         NoteAdapter adapter = new NoteAdapter(this, arrayList);
         recyclerView.setAdapter(adapter);
-        cargarNotas();
+        cargarNotas();  // Cargar las notas del usuario
 
         btnAgregarNota.setOnClickListener(view ->
                 startActivity(new Intent(Diario.this, AgregarNota.class))
@@ -71,7 +84,8 @@ public class Diario extends AppCompatActivity implements NavigationView.OnNaviga
 
     private void cargarNotas() {
         arrayList.clear();
-        Cursor cursor = admin.cargarNotas(); // ← Cambiado
+        // Pasar usuarioId al método cargarNotas
+        Cursor cursor = admin.cargarNotas(usuarioId); // Ahora se pasa el usuarioId
         while (cursor.moveToNext()) {
             arrayList.add(new NoteModel(cursor.getString(1), cursor.getString(2), cursor.getInt(0)));
         }

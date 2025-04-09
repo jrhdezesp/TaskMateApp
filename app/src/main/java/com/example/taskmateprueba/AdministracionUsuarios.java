@@ -3,6 +3,8 @@ package com.example.taskmateprueba;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +26,35 @@ public class AdministracionUsuarios extends AppCompatActivity {
         });
     }
 
+    public void crearUsuario(View view) {
+        EditText txtUsuario = findViewById(R.id.txtAgregarUsuario);
+        EditText txtClave = findViewById(R.id.txtAgregarClave);
+        EditText txtCorreo = findViewById(R.id.txtAgregarCorreo);
+
+        String usuario = txtUsuario.getText().toString().trim();
+        String clave = txtClave.getText().toString().trim();
+        String correo = txtCorreo.getText().toString().trim();
+
+        if (usuario.isEmpty() || clave.isEmpty() || correo.isEmpty()) {
+            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+        } else {
+            AdminSQLiteOpen db = new AdminSQLiteOpen(this);
+            if (db.usuarioExiste(usuario)) {
+                Toast.makeText(this, "El usuario ya existe, elige otro nombre", Toast.LENGTH_SHORT).show();
+            } else {
+                db.insertarUsuario(usuario, clave, correo);
+                Toast.makeText(this, "Usuario creado exitosamente", Toast.LENGTH_SHORT).show();
+
+                // Limpiar campos
+                txtUsuario.setText("");
+                txtClave.setText("");
+                txtCorreo.setText("");
+            }
+        }
+    }
+
     public void Login(View view){
-        Intent login = new Intent(this,Login.class);
+        Intent login = new Intent(this, Login.class);
         startActivity(login);
     }
 }

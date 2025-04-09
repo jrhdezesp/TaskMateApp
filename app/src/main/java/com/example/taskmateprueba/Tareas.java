@@ -18,6 +18,7 @@ public class Tareas extends AppCompatActivity {
     Button btnAgregarTask;
     RadioGroup tipo;
     AdminSQLiteOpen admin;
+    private SesionManager sesionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,16 @@ public class Tareas extends AppCompatActivity {
         btnAgregarTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Obtener el ID del usuario desde la sesión
+                int usuarioId = sesionManager.obtenerUsuarioId();
+
                 if (txtTitulo.length() > 0 && txtDescripcion.length() > 0 && tipo.getCheckedRadioButtonId() != -1) {
                     int selectedId = tipo.getCheckedRadioButtonId();
                     RadioButton selectedRadioButton = findViewById(selectedId);
                     String tipoTarea = selectedRadioButton.getText().toString();
 
-                    admin.insertarTask(txtTitulo.getText().toString(), txtDescripcion.getText().toString(), tipoTarea);
+                    // Insertar la tarea junto con el usuarioId
+                    admin.insertarTask(txtTitulo.getText().toString(), txtDescripcion.getText().toString(), tipoTarea, usuarioId);
                     Toast.makeText(Tareas.this, "Los datos se agregaron correctamente", Toast.LENGTH_SHORT).show();
                     txtTitulo.setText("");
                     txtDescripcion.setText("");

@@ -95,6 +95,7 @@
         android:layout_height="65dp"
         android:backgroundTint="#7297A6"
         android:text="Crear Usuario"
+        android:onClick="crearUsuario"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

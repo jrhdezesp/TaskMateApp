@@ -18,6 +18,8 @@ public class AgregarTarea extends AppCompatActivity {
 
     AdminSQLiteOpen admin;
 
+    private SesionManager sesionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +32,23 @@ public class AgregarTarea extends AppCompatActivity {
         admin = new AdminSQLiteOpen(AgregarTarea.this);
 
 
-        btnAgregar.setOnClickListener(new View.OnClickListener(){
+        btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                if(txtTitulo.length()>0 && txtDescripcion.length()>0){
-                    admin.insertarDiaria(txtTitulo.getText().toString(),txtDescripcion.getText().toString());
-                    Toast.makeText(AgregarTarea.this,"Los datos se agregaron correctamente", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AgregarTarea.this,TareasDiarias.class));
+                // Obtener el ID del usuario desde la sesión
+                int usuarioId = sesionManager.obtenerUsuarioId();
+
+                if (txtTitulo.length() > 0 && txtDescripcion.length() > 0) {
+                    // Insertar la tarea diaria junto con el id del usuario
+                    admin.insertarDiaria(txtTitulo.getText().toString(), txtDescripcion.getText().toString(), usuarioId);
+                    Toast.makeText(AgregarTarea.this, "Los datos se agregaron correctamente", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AgregarTarea.this, TareasDiarias.class));
                     txtTitulo.setText("");
                     txtDescripcion.setText("");
                     finish();
-                }else{
-                    Toast.makeText(AgregarTarea.this,"Llene todos los campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AgregarTarea.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,10 +1,13 @@
 package com.example.taskmateprueba;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import androidx.annotation.Nullable;
+
 public class AdminSQLiteOpen extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "TaskMate.db";
@@ -16,47 +19,67 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        //Tabla Usuarios
+        db.execSQL("PRAGMA foreign_keys=ON;");
         db.execSQL("CREATE TABLE usuarios(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario TEXT, clave TEXT, correo TEXT)");
-        // Tabla Journal
-        db.execSQL("CREATE TABLE journal(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT)");
-        //Tabla diarias
-        db.execSQL("CREATE TABLE diarias(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT)");
-        //Tabla Tareas
-        db.execSQL("CREATE TABLE tareas(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT, tipo TEXT)");
+        db.execSQL("CREATE TABLE journal(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT, usuario_id INTEGER, FOREIGN KEY(usuario_id) REFERENCES usuarios(id))");
+        db.execSQL("CREATE TABLE diarias(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT, usuario_id INTEGER, FOREIGN KEY(usuario_id) REFERENCES usuarios(id))");
+        db.execSQL("CREATE TABLE tareas(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT, tipo TEXT, usuario_id INTEGER, FOREIGN KEY(usuario_id) REFERENCES usuarios(id))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Puedes mejorar esto para hacer migraciones más controladas
         db.execSQL("DROP TABLE IF EXISTS journal");
         db.execSQL("DROP TABLE IF EXISTS diarias");
+        db.execSQL("DROP TABLE IF EXISTS tareas");
+        db.execSQL("DROP TABLE IF EXISTS usuarios");
         onCreate(db);
     }
 
-    // Metodos para Usuarios
-    public void insertarUsuario(String usuario,String clave, String correo){
+    public boolean usuarioExiste(String usuario) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM usuarios WHERE usuario = ?", new String[]{usuario});
+        boolean existe = cursor.moveToFirst();
+        cursor.close();
+        return existe;
+    }
+
+    // Verificar login
+    public int verificarUsuario(String usuario, String clave) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM usuarios WHERE usuario = ? AND clave = ?", new String[]{usuario, clave});
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            cursor.close();
+            return id;
+        } else {
+            cursor.close();
+            return -1;
+        }
+    }
+
+    // Usuarios
+    public void insertarUsuario(String usuario, String clave, String correo){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("usuario", usuario);
         values.put("clave", clave);
         values.put("correo", correo);
-        db.insert("usuario",null,values);
+        db.insert("usuarios", null, values);
     }
 
-    // Métodos para journal
-    public void insertarNota(String titulo, String descripcion) {
+    // Journal
+    public void insertarNota(String titulo, String descripcion, int usuarioId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("titulo", titulo);
         values.put("descripcion", descripcion);
+        values.put("usuario_id", usuarioId);
         db.insert("journal", null, values);
     }
 
-    public Cursor cargarNotas() {
+    public Cursor cargarNotas(int usuarioId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM journal", null);
+        return db.rawQuery("SELECT * FROM journal WHERE usuario_id = ?", new String[]{String.valueOf(usuarioId)});
     }
 
     public void eliminarNota(String id) {
@@ -72,18 +95,19 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         db.update("journal", values, "id=?", new String[]{id});
     }
 
-    // Métodos para diarias
-    public void insertarDiaria(String titulo, String descripcion) {
+    // Diarias
+    public void insertarDiaria(String titulo, String descripcion, int usuarioId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("titulo", titulo);
         values.put("descripcion", descripcion);
+        values.put("usuario_id", usuarioId);
         db.insert("diarias", null, values);
     }
 
-    public Cursor cargarDiarias() {
+    public Cursor cargarDiarias(int usuarioId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM diarias", null);
+        return db.rawQuery("SELECT * FROM diarias WHERE usuario_id = ?", new String[]{String.valueOf(usuarioId)});
     }
 
     public void eliminarDiaria(String id) {
@@ -99,35 +123,34 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         db.update("diarias", values, "id=?", new String[]{id});
     }
 
-    //Tasks
-
-    public void insertarTask(String titulo, String descripcion, String tipo) {
+    // Tareas
+    public void insertarTask(String titulo, String descripcion, String tipo, int usuarioId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("titulo", titulo);
         values.put("descripcion", descripcion);
-        values.put("tipo",tipo);
+        values.put("tipo", tipo);
+        values.put("usuario_id", usuarioId);
         db.insert("tareas", null, values);
     }
-
-    public Cursor cargarTodas(){
+    public Cursor cargarTodas(int usuarioId){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("Select * from tareas",null);
+        return db.rawQuery("SELECT * FROM tareas WHERE usuario_id = ?", new String[]{String.valueOf(usuarioId)});
     }
 
-    public Cursor cargarLeve() {
+    public Cursor cargarLeve(int usuarioId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ?", new String[]{"Leve"});
+        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ? AND usuario_id = ?", new String[]{"Leve", String.valueOf(usuarioId)});
     }
 
-    public Cursor cargarModerada() {
+    public Cursor cargarModerada(int usuarioId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ?", new String[]{"Moderada"});
+        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ? AND usuario_id = ?", new String[]{"Moderada", String.valueOf(usuarioId)});
     }
 
-    public Cursor cargarUrgente() {
+    public Cursor cargarUrgente(int usuarioId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ?", new String[]{"Urgente"});
+        return db.rawQuery("SELECT * FROM tareas WHERE tipo = ? AND usuario_id = ?", new String[]{"Urgente", String.valueOf(usuarioId)});
     }
 
     public void eliminarTask(String id) {
@@ -143,6 +166,4 @@ public class AdminSQLiteOpen extends SQLiteOpenHelper {
         values.put("tipo", tipo);
         db.update("tareas", values, "id=?", new String[]{id});
     }
-
-
 }
