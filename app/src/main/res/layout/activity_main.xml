@@ -34,17 +34,6 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <!-- Botón dentro del Toolbar -->
-            <Button
-                android:id="@+id/btnCerrarSesion"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:backgroundTint="#224459"
-                android:onClick="Login"
-                android:layout_marginRight="10dp"
-                android:text=""
-                android:textColor="#FFFFFF"
-                android:drawableLeft="@drawable/baseline_arrow_circle_right_24"/>
         </androidx.appcompat.widget.Toolbar>
 
         <!-- Contenido principal -->
