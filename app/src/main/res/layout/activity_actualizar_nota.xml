@@ -79,6 +79,4 @@
         android:text="Actualizar"
         android:textStyle="bold"/>
 
-
-
 </RelativeLayout>
